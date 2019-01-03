@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Marksix echarts3 Bootstrap3</title>
+    
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+    
+    <!-- 引入 marksix.js -->
+    <script src="js/marksix.js"></script>
+    
+    <!-- 引入 echarts.js -->
+    <script src="js/echarts.js"></script>
+    
+    <script>
+        marksix.load_data2(201);
+        
+        var m = 2;
+        //series = marksix.adapter(loc='0000001', zbname='mod', args=[m, marksix.get_mod_list(m)], tf_n=0);
+        var series = marksix.adapter('0000001', 'mod', [m, marksix.get_mod_list(m)], tf_n=0);
+        var close = marksix.cumsum(series);
+        
+        var bbands_list = marksix.bbands(close, timeperiod=5);
+        
+        //伪造201个标签
+        var labels = marksix.get_200_labels(n=201); 
+        
+        var dataframe = marksix.get_dataframe();
+    </script>
+    
+  </head>
+  <body>
+
+
+<div class="row">
+<div class="col-sm-2">
+<form class="form-horizontal">
+
+<fieldset>
+
+  <div id="legend" class="">
+  <legend class="">指标</legend>
+  </div>
+
+
+  <div class="form-group">
+    <label class="col-sm-4 control-label">位置</label>
+
+    <!-- Multiple Checkboxes -->
+    <div class="col-sm-8">
+      <!-- Inline Checkboxes -->
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox1" value="option1">1
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox2" value="option2">2
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" id="inlineCheckbox3" value="option3">3
+      </label>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <!-- Select Basic -->
+    <label class="col-sm-4 control-label">指标</label>
+    <div class="col-sm-8">
+      <select class="form-control">
+        <option>模</option>
+        <option>分</option>
+        <option>随机</option>
+      </select>
+    </div>
+  </div>
+
+  
+  <div class="form-group">
+    <!-- Select Basic -->
+    <label class="col-sm-4 control-label">参数1</label>
+    <div class="col-sm-8">
+      <select class="form-control">
+        <option>2</option>
+        <option>4</option>
+        <option>6</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <!-- Appended input-->
+    <label class="col-sm-4 control-label">参数2</label>
+    <div class="col-sm-8">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="[1,2,3]">
+        <span class="input-group-addon">^_^</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <!-- Select Basic -->
+    <label class="col-sm-4 control-label">同反</label>
+    <div class="col-sm-8">
+      <select class="form-control">
+        <option>0</option>
+        <option>1</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button class="btn btn-info">K线图</button>
+    </div>
+  </div>
+
+</fieldset>
+
+
+
+<fieldset>
+
+  <div id="legend" class="">
+    <legend class="">策略</legend>
+  </div>
+
+  <div class="form-group">
+    <!-- Select Basic -->
+    <label class="col-sm-4 control-label">策略</label>
+    <div class="col-sm-8">
+      <select class="form-control">
+        <option>金叉死叉</option>
+        <option>KDJ极限</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <!-- Select Basic -->
+    <label class="col-sm-4 control-label">机学</label>
+    <div class="col-sm-8">
+      <select class="form-control" disabled>
+        <option>随机森林</option>
+        <option>支持向量机</option>
+      </select>
+    </div>
+
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox">回测
+        </label>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button class="btn btn-info">Button</button>
+    </div>
+  </div>
+
+
+</fieldset>
+
+</form>
+
+</div>
+
+<div class="col-sm-10">
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 1100px;height:600px;"></div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery-3.1.1.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // 指定图表的配置项和数据
+      var option = {
+          //backgroundColor: '#666666',
+          title: {
+              text: '特码位 单双',
+              left: 'center',
+              //left: '3%'
+          },
+          grid: {
+              //show: true,
+              //backgroundColor: '#dddddd',
+              left: '3%',
+              right: '3%'
+          },
+          tooltip : {
+              trigger: 'axis',
+              showDelay: 50,             // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
+              formatter: function (params) {
+                  //console.log(params);
+                  //console.log(params[0].dataIndex);
+                  var haoma = [0,1,2,3,4,5,6].map(function(x){return dataframe[x][params[0].dataIndex]}); //取当期号码
+                  
+                  var res = '日期 : ' + params[0].name + '<br/>';
+                  res += '期数 : ' + " " + '<br/>';
+                  res += '号码 : ' + haoma.map(function(x){return (marksix.is_red(x))?"<span style='color:red'>"+x+"</span>":(marksix.is_green(x))?"<span style='color:green'>"+x+"</span>":"<span style='color:blue'>"+x+"</span>";}).join(" ");
+                  return res;
+              }
+          },
+          dataZoom: [{
+              type: 'inside',
+              start: 50,
+              end: 100
+          }, {
+              start: 50,
+              end: 100,
+              handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+              handleSize: '80%',
+              handleStyle: {
+                  color: '#fff',
+                  shadowBlur: 3,
+                  shadowColor: 'rgba(0, 0, 0, 0.6)',
+                  shadowOffsetX: 2,
+                  shadowOffsetY: 2
+              }
+          }],
+          legend: {
+              data:[]
+          },
+          xAxis: {
+              data: labels
+          },
+          yAxis: {
+              type : 'value',
+              scale:true,
+              boundaryGap: [0.05, 0.05],
+              splitArea : {show : true}
+          },
+          series: [{
+              name: 'close',
+              type: 'line',
+              symbol: 'diamond', //'none' | 'circle' | 'rectangle' | 'triangle' | 'diamond' | 'emptyCircle' | 'emptyRectangle' | 'emptyTriangle' | 'emptyDiamond'，另有'heart'（心形）、'droplet'（水滴）、'pin'（标注）、'arrow'（箭头）和'star'（五角星）
+              showAllSymbol: true,
+              symbolSize: 8,
+              lineStyle: {
+                normal:{
+                  //color: '#ffff00',
+                  type: 'solid',
+                  width: 2
+                }
+              },
+              data: close
+          },{
+              name: 'bl21',
+              type: 'line',
+              symbol: 'none',
+              lineStyle: {
+                normal:{
+                  color: '#000066',
+                  type: 'solid',
+                  width: 2,
+                  opacity: 0.3
+                }
+              },
+              data: bbands_list[0]
+          },{
+              name: 'bl11',
+              type: 'line',
+              symbol: 'none',
+              lineStyle: {
+                normal:{
+                  color: '#000066',
+                  type: 'solid',
+                  width: 1,
+                  opacity: 0.3
+                }
+              },
+              data: bbands_list[1]
+          },{
+              name: 'avr',
+              type: 'line',
+              symbol: 'none',
+              lineStyle: {
+                normal:{
+                  color: '#00ff00',
+                  type: 'solid',
+                  width: 2,
+                  opacity: 0.3
+                }
+              },
+              data: bbands_list[2]
+          },{
+              name: 'bl12',
+              type: 'line',
+              symbol: 'none',
+              lineStyle: {
+                normal:{
+                  color: '#000066',
+                  type: 'solid',
+                  width: 1,
+                  opacity: 0.3
+                }
+              },
+              data: bbands_list[3]
+          },{
+              name: 'bl22',
+              type: 'line',
+              symbol: 'none',
+              lineStyle: {
+                normal:{
+                  color: '#000066',
+                  type: 'solid',
+                  width: 2,
+                  opacity: 0.3
+                }
+              },
+              data: bbands_list[4]
+          }]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+    
+  </body>
+</html>
